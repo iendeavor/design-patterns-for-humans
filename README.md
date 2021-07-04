@@ -530,42 +530,31 @@ Singleton pattern is actually considered an anti-pattern and overuse of it shoul
 **Programmatic Example**
 
 To create a singleton, make the constructor private, disable cloning, disable extension and create a static variable to house the instance
-```php
-final class President
-{
-    private static $instance;
+```dart
+import 'dart:mirrors';
 
-    private function __construct()
-    {
-        // Hide the constructor
-    }
+class President {
+  factory President() {
+    return _instance;
+  }
 
-    public static function getInstance(): President
-    {
-        if (!self::$instance) {
-            self::$instance = new self();
-        }
+  static final President _instance = President._concrete();
 
-        return self::$instance;
-    }
-
-    private function __clone()
-    {
-        // Disable cloning
-    }
-
-    private function __wakeup()
-    {
-        // Disable unserialize
-    }
+  President._concrete() {
+    InstanceMirror im = reflect(this);
+    if (im.type.reflectedType != President)
+      throw "President can't be inherited";
+  }
 }
 ```
 Then in order to use
-```php
-$president1 = President::getInstance();
-$president2 = President::getInstance();
+```dart
+void main() {
+  var president1 = President();
+  var president2 = President();
 
-var_dump($president1 === $president2); // true
+  print(identical(president1, president2)); // true
+}
 ```
 
 Structural Design Patterns
