@@ -1035,77 +1035,65 @@ Wikipedia says
 
 Taking our computer example from above. Here we have the computer class
 
-```php
-class Computer
-{
-    public function getElectricShock()
-    {
-        echo "Ouch!";
-    }
+```dart
+class Computer {
+  getElectricShock() {
+    print("Ouch!");
+  }
 
-    public function makeSound()
-    {
-        echo "Beep beep!";
-    }
+  makeSound() {
+    print("Beep beep!");
+  }
 
-    public function showLoadingScreen()
-    {
-        echo "Loading..";
-    }
+  showLoadingScreen() {
+    print("Loading..");
+  }
 
-    public function bam()
-    {
-        echo "Ready to be used!";
-    }
+  bam() {
+    print("Ready to be used!");
+  }
 
-    public function closeEverything()
-    {
-        echo "Bup bup bup buzzzz!";
-    }
+  closeEverything() {
+    print("Bup bup bup buzzzz!");
+  }
 
-    public function sooth()
-    {
-        echo "Zzzzz";
-    }
+  sooth() {
+    print("Zzzzz");
+  }
 
-    public function pullCurrent()
-    {
-        echo "Haaah!";
-    }
+  pullCurrent() {
+    print("Haaah!");
+  }
 }
 ```
 Here we have the facade
-```php
-class ComputerFacade
-{
-    protected $computer;
+```dart
+class ComputerFacade {
+  Computer _computer;
 
-    public function __construct(Computer $computer)
-    {
-        $this->computer = $computer;
-    }
+  ComputerFacade({required computer}) : _computer = computer;
 
-    public function turnOn()
-    {
-        $this->computer->getElectricShock();
-        $this->computer->makeSound();
-        $this->computer->showLoadingScreen();
-        $this->computer->bam();
-    }
+  turnOn() {
+    _computer.getElectricShock();
+    _computer.makeSound();
+    _computer.showLoadingScreen();
+    _computer.bam();
+  }
 
-    public function turnOff()
-    {
-        $this->computer->closeEverything();
-        $this->computer->pullCurrent();
-        $this->computer->sooth();
-    }
+  turnOff() {
+    _computer.closeEverything();
+    _computer.pullCurrent();
+    _computer.sooth();
+  }
 }
 ```
 Now to use the facade
-```php
-$computer = new ComputerFacade(new Computer());
-$computer->turnOn(); // Ouch! Beep beep! Loading.. Ready to be used!
-$computer->turnOff(); // Bup bup buzzz! Haah! Zzzzz
+```dart
+void main() {
+  var computer = ComputerFacade(computer: Computer());
+  computer.turnOn(); // Ouch! Beep beep! Loading.. Ready to be used!
+  computer.turnOff(); // Bup bup buzzz! Haah! Zzzzz
+}
 ```
 
 🍃 Flyweight
