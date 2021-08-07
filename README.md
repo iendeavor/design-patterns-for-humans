@@ -531,20 +531,14 @@ Singleton pattern is actually considered an anti-pattern and overuse of it shoul
 
 To create a singleton, make the constructor private, disable cloning, disable extension and create a static variable to house the instance
 ```dart
-import 'dart:mirrors';
-
 class President {
   factory President() {
-    return _instance;
+    return President.instance;
   }
 
-  static final President _instance = President._concrete();
+  President._();
 
-  President._concrete() {
-    InstanceMirror im = reflect(this);
-    if (im.type.reflectedType != President)
-      throw "President can't be inherited";
-  }
+  static President instance = President._();
 }
 ```
 Then in order to use
